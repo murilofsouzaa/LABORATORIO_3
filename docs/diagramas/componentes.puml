@@ -1,0 +1,16 @@
+@startuml
+package "Sistema de Moeda Estudantil (Arquitetura MVC)" {
+    [Views (Frontend)] as Views
+    [Controllers] as Controllers
+    [Models] as Models
+}
+
+database "Base de Dados" as BD
+[Serviço de Email] as Email
+
+Views ..> Controllers : Pedidos / Interações do Utilizador
+Controllers ..> Models : Manipulação de Regras de Negócio
+Controllers ..> Views : Atualização da Interface
+Models ..> BD : Persistência de Dados (CRUDs)
+Controllers ..> Email : Disparo de Notificações e Cupões
+@enduml

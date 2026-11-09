@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Aluno
+actor Professor
+actor "Empresa Parceira" as Empresa
+
+package "Sistema de Moeda Estudantil" {
+    usecase "Realizar Registo" as UC1
+    usecase "Autenticar no Sistema" as UC2
+    usecase "Consultar Extrato" as UC3
+    usecase "Enviar Moedas" as UC4
+    usecase "Registar Vantagem" as UC5
+    usecase "Resgatar Vantagem" as UC6
+}
+
+Aluno --> UC1
+Empresa --> UC1
+Aluno --> UC2
+Professor --> UC2
+Empresa --> UC2
+Aluno --> UC3
+Professor --> UC3
+Professor --> UC4
+Empresa --> UC5
+Aluno --> UC6
+
+note right of Professor : Pré-registado pela Instituição
+@enduml
