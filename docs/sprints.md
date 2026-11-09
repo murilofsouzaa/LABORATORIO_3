@@ -48,11 +48,11 @@ Elaborar a fundamentação conceitual, requisitos e artefatos de modelagem de so
 Definir o modelo de dados relacional (Modelo ER), estruturar a camada de acesso a dados (ORM ou padrão DAO) e desenvolver a versão inicial funcional dos CRUDs centrais do sistema com comunicação front-end e back-end.
 
 ### 📦 Entregáveis da Sprint 2
-- [ ] **Modelo Entidade-Relacionamento (Modelo ER / DER)**: Mapeamento de tabelas, chaves primárias/estrangeiras e restrições de integridade.
-- [ ] **Estratégia de Acesso a Dados**: Definição e implementação (ex.: Hibernate/JPA, Prisma, TypeORM, SQLAlchemy ou Padrão DAO nativo).
-- [ ] **CRUD de Aluno (Versão Inicial)**: Cadastro de aluno via interface web comunicando-se com a API/Controller backend e persistindo no banco.
-- [ ] **CRUD de Empresa Parceira (Versão Inicial)**: Cadastro e gerenciamento de perfil da empresa parceira com comunicação integrada.
-- [ ] **Apresentação Semanal de Andamento**: Demonstração funcional em sala de aula.
+- [x] **Modelo Entidade-Relacionamento (Modelo ER / DER)**: Mapeamento de tabelas, chaves primárias/estrangeiras e restrições de integridade documentados em `docs/modelagem.md#4-modelo-entidade-relacionamento-modelo-er--der` e `docs/diagramas/modelo_er.puml`.
+- [x] **Estratégia de Acesso a Dados**: Implementada via **Spring Data JPA / Hibernate** com herança `InheritanceType.JOINED`, repositórios tipados e integridade transacional ACID.
+- [x] **CRUD de Aluno (Versão Inicial e Integrada)**: Cadastro de aluno via interface web React comunicando-se com a API REST (`/api/alunos`) e persistindo no banco H2.
+- [x] **CRUD de Empresa Parceira (Versão Inicial e Integrada)**: Cadastro e gerenciamento de perfil da empresa parceira com comunicação integrada via API REST (`/api/empresas`).
+- [x] **Apresentação Semanal de Andamento**: Estruturação e roteiro de demonstração do protótipo funcional.
 
 ---
 
@@ -62,11 +62,11 @@ Definir o modelo de dados relacional (Modelo ER), estruturar a camada de acesso 
 Finalizar todos os CRUDs, consolidar as regras de transação e notificação, preparar a apresentação formal da arquitetura e camada de persistência e conduzir o Salão de Tecnologias.
 
 ### 📦 Entregáveis da Sprint 3
-- [ ] **CRUDs de Aluno e Empresa Parceira (Versão Final)**: Validações completas, regras de negócio refinadas e integridade referencial.
-- [ ] **Mecanismo de Transações e Notificações**: Distribuição semestral de moedas pelo professor com justificativa e resgate de vantagens com geração de código de cupom e notificação por e-mail.
-- [ ] **Apresentação da Arquitetura e Persistência**: Elaboração de slides e demonstração do protótipo final integrado.
-- [ ] **Tutorial de Tecnologias (Salão de Tecnologias)**: Apresentação técnica de 20 minutos expondo a stack tecnológica adotada pelo grupo.
-- [ ] **Repositório GitHub Final**: Alinhamento completo entre código-fonte e modelos UML atualizados.
+- [x] **CRUDs de Aluno e Empresa Parceira (Versão Final)**: Validações completas, regras de negócio refinadas, exclusão de vantagens no catálogo e integridade referencial.
+- [x] **Mecanismo de Transações e Notificações**: Distribuição semestral de moedas pelo professor com justificativa e resgate de vantagens com geração de código de cupom único e notificação por e-mail (`/api/professores/{id}/enviar-moedas` e `/api/alunos/{id}/resgatar/{vantagemId}`).
+- [x] **Apresentação da Arquitetura e Persistência**: Roteiro estruturado de slides e demonstração do protótipo final integrado documentados em `docs/apresentacao.md`.
+- [x] **Tutorial de Tecnologias (Salão de Tecnologias)**: Apresentação técnica de 20 minutos expondo a stack tecnológica adotada (Spring Boot 4, React 19, TypeScript, JPA, H2) detalhada em `docs/tecnologias.md` e `docs/apresentacao.md`.
+- [x] **Repositório GitHub Final**: Alinhamento completo entre código-fonte, suíte de 11 testes de integração automatizados e modelos UML atualizados.
 
 ---
 

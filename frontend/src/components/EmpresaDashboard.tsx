@@ -56,6 +56,21 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
     }
   };
 
+  const handleRemoverVantagem = async (id: number) => {
+    if (!window.confirm('Tem certeza de que deseja remover esta vantagem do catálogo?')) {
+      return;
+    }
+    setErro(null);
+    setSucesso(null);
+    try {
+      await api.vantagens.remover(id);
+      setSucesso('Vantagem removida com sucesso!');
+      carregarVantagens();
+    } catch (err: any) {
+      setErro(err.message || 'Falha ao remover vantagem.');
+    }
+  };
+
   const handleValidarCupom = async (e: React.FormEvent) => {
     e.preventDefault();
     setErro(null);
@@ -256,9 +271,38 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
 
                 <div className="vantagem-body">
                   <p className="vantagem-desc">{v.descricao}</p>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                    Ativa no catálogo geral dos alunos
-                  </span>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: '0.85rem',
+                      paddingTop: '0.75rem',
+                      borderTop: '1px solid var(--border)',
+                    }}
+                  >
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      Ativa no catálogo
+                    </span>
+                    <button
+                      onClick={() => handleRemoverVantagem(v.id)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#dc2626',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: 'var(--radius-sm)',
+                        transition: 'background 0.15s ease',
+                      }}
+                      onMouseOver={(e) => (e.currentTarget.style.background = '#fef2f2')}
+                      onMouseOut={(e) => (e.currentTarget.style.background = 'none')}
+                    >
+                      Remover
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

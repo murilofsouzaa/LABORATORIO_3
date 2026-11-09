@@ -28,6 +28,11 @@ Este documento consolida os artefatos de modelagem de software produzidos na **S
    - [Diagrama Interativo (Mermaid)](#diagrama-interativo-mermaid-componentes)
    - [Detalhamento dos Componentes e Camadas MVC](#detalhamento-dos-componentes-e-camadas-mvc)
    - [Código PlantUML](#código-plantuml-componentes)
+4. [Modelo Entidade-Relacionamento (Modelo ER / DER)](#4-modelo-entidade-relacionamento-modelo-er--der)
+   - [Diagrama Interativo (Mermaid - DER)](#diagrama-interativo-mermaid---der)
+   - [Dicionário de Tabelas e Restrições](#dicionário-de-tabelas-e-restrições)
+   - [Mapeamento Objeto-Relacional (JPA)](#mapeamento-objeto-relacional-jpa)
+   - [Código PlantUML (Modelo ER)](#código-plantuml-modelo-er)
 
 ---
 
@@ -398,3 +403,267 @@ Models ..> BD : Persistência de Dados (CRUDs)
 Controllers ..> Email : Disparo de Notificações e Cupões
 @enduml
 ```
+
+---
+
+## 4. Modelo Entidade-Relacionamento (Modelo ER / DER)
+
+O **Modelo Entidade-Relacionamento (DER)** descreve o esquema lógico de dados persistidos no banco de dados relacional. Ele atende aos requisitos de integridade referencial, normalização (3FN), histórico imutável de transações e suporte à estratégia de herança mapeada pelo JPA/Hibernate (`InheritanceType.JOINED`).
+
+### Diagrama Interativo (Mermaid - DER)
+
+```mermaid
+erDiagram
+    INSTITUICOES ||--o{ ALUNOS : "matricula"
+    INSTITUICOES ||--o{ PROFESSORES : "vincula"
+    UTILIZADORES ||--|| ALUNOS : "estende (PK=FK)"
+    UTILIZADORES ||--|| PROFESSORES : "estende (PK=FK)"
+    UTILIZADORES ||--|| EMPRESAS_PARCEIRAS : "estende (PK=FK)"
+    EMPRESAS_PARCEIRAS ||--o{ VANTAGENS : "oferta"
+    PROFESSORES ||--o{ TRANSACOES : "transfere (remetente)"
+    ALUNOS ||--o{ TRANSACOES : "participa (destinatario/resgatante)"
+    VANTAGENS ||--o{ TRANSACOES : "origina resgate"
+
+    INSTITUICOES {
+        bigint id PK "auto_increment"
+        varchar nome UK "NOT NULL"
+    }
+
+    UTILIZADORES {
+        bigint id PK "auto_increment"
+        varchar login UK "NOT NULL"
+        varchar senha "NOT NULL"
+        varchar tipo "NOT NULL (ALUNO, PROFESSOR, EMPRESA)"
+    }
+
+    ALUNOS {
+        bigint id PK,FK "referencia utilizadores(id)"
+        varchar nome "NOT NULL"
+        varchar email UK "NOT NULL"
+        varchar cpf UK "NOT NULL"
+        varchar rg "NOT NULL"
+        varchar endereco "NOT NULL"
+        varchar curso "NOT NULL"
+        int saldo "NOT NULL, default 0"
+        bigint instituicao_id FK "NOT NULL, referencia instituicoes(id)"
+    }
+
+    PROFESSORES {
+        bigint id PK,FK "referencia utilizadores(id)"
+        varchar nome "NOT NULL"
+        varchar cpf UK "NOT NULL"
+        varchar departamento "NOT NULL"
+        int saldo "NOT NULL, default 1000"
+        bigint instituicao_id FK "NOT NULL, referencia instituicoes(id)"
+    }
+
+    EMPRESAS_PARCEIRAS {
+        bigint id PK,FK "referencia utilizadores(id)"
+        varchar nome "NOT NULL"
+        varchar email UK "NOT NULL"
+    }
+
+    VANTAGENS {
+        bigint id PK "auto_increment"
+        varchar descricao "NOT NULL, length 1000"
+        varchar foto "NOT NULL, length 2000"
+        int custo "NOT NULL, CHECK > 0"
+        bigint empresa_id FK "NOT NULL, referencia empresas_parceiras(id)"
+    }
+
+    TRANSACOES {
+        bigint id PK "auto_increment"
+        int valor "NOT NULL, CHECK > 0"
+        varchar motivo "NOT NULL, length 1000"
+        timestamp data "NOT NULL"
+        varchar tipo "NOT NULL (ENVIO_MOEDAS, RESGATE_VANTAGEM)"
+        varchar codigo_cupom "NULLABLE, preenchido no resgate"
+        bigint professor_id FK "NULLABLE, referencia professores(id)"
+        bigint aluno_id FK "NOT NULL, referencia alunos(id)"
+        bigint vantagem_id FK "NULLABLE, referencia vantagens(id)"
+    }
+```
+
+### Dicionário de Tabelas e Restrições
+
+#### 1. Tabela `instituicoes`
+Armazena as instituições de ensino pré-cadastradas no sistema às quais alunos e professores estão vinculados.
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `IDENTITY`, `NOT NULL` | Identificador único numérico |
+| `nome` | `VARCHAR(255)` | `UNIQUE`, `NOT NULL` | Razão social / Nome da universidade |
+
+#### 2. Tabela `utilizadores` (Tabela Base de Autenticação)
+Implementa a estratégia `InheritanceType.JOINED`. Armazena credenciais comuns de login para todos os tipos de atores.
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `IDENTITY`, `NOT NULL` | Identificador primário da conta |
+| `login` | `VARCHAR(100)` | `UNIQUE`, `NOT NULL` | Nome de usuário único para login |
+| `senha` | `VARCHAR(255)` | `NOT NULL` | Senha criptografada / hash |
+| `tipo` | `VARCHAR(20)` | `NOT NULL` | Perfil de acesso (`ALUNO`, `PROFESSOR`, `EMPRESA`) |
+
+#### 3. Tabela `alunos`
+Especialização de `utilizadores`. Mantém dados pessoais, acadêmicos e saldo corrente de moedas recebidas.
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `FK -> utilizadores(id)` | Chave primária compartilhada |
+| `nome` | `VARCHAR(255)` | `NOT NULL` | Nome completo do discente |
+| `email` | `VARCHAR(255)` | `UNIQUE`, `NOT NULL` | E-mail para recebimento de extratos e cupons |
+| `cpf` | `VARCHAR(14)` | `UNIQUE`, `NOT NULL` | Cadastro de Pessoa Física |
+| `rg` | `VARCHAR(20)` | `NOT NULL` | Registro Geral de identificação |
+| `endereco` | `VARCHAR(255)` | `NOT NULL` | Endereço residencial do aluno |
+| `curso` | `VARCHAR(100)` | `NOT NULL` | Curso universitário matriculado |
+| `saldo` | `INTEGER` | `NOT NULL`, `DEFAULT 0` | Saldo corrente de moedas de mérito |
+| `instituicao_id`| `BIGINT` | `FK -> instituicoes(id)`, `NOT NULL`| Vínculo institucional obrigatório |
+
+#### 4. Tabela `professores`
+Especialização de `utilizadores`. Mantém dados funcionais, departamento e saldo de moedas semestrais para distribuição.
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `FK -> utilizadores(id)` | Chave primária compartilhada |
+| `nome` | `VARCHAR(255)` | `NOT NULL` | Nome completo do docente |
+| `cpf` | `VARCHAR(14)` | `UNIQUE`, `NOT NULL` | CPF institucional |
+| `departamento` | `VARCHAR(100)` | `NOT NULL` | Departamento acadêmico vinculado |
+| `saldo` | `INTEGER` | `NOT NULL`, `DEFAULT 1000` | Saldo semestral cumulativo |
+| `instituicao_id`| `BIGINT` | `FK -> instituicoes(id)`, `NOT NULL`| Vínculo com a universidade |
+
+#### 5. Tabela `empresas_parceiras`
+Especialização de `utilizadores`. Representa os estabelecimentos conveniados que disponibilizam vantagens aos alunos.
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `FK -> utilizadores(id)` | Chave primária compartilhada |
+| `nome` | `VARCHAR(255)` | `NOT NULL` | Nome fantasia / Razão social da empresa |
+| `email` | `VARCHAR(255)` | `UNIQUE`, `NOT NULL` | E-mail corporativo para conferência de cupons |
+
+#### 6. Tabela `vantagens`
+Produtos, serviços ou descontos cadastrados pelas empresas parceiras para troca por moedas.
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `IDENTITY`, `NOT NULL` | Identificador único da vantagem |
+| `descricao` | `VARCHAR(1000)`| `NOT NULL` | Detalhamento do produto ou desconto ofertado |
+| `foto` | `VARCHAR(2000)`| `NOT NULL` | URI/URL da imagem ilustrativa da vantagem |
+| `custo` | `INTEGER` | `NOT NULL`, `CHECK (custo > 0)` | Valor exigido em moedas estudantis |
+| `empresa_id` | `BIGINT` | `FK -> empresas_parceiras(id)`, `NOT NULL`| Empresa parceira proprietária da oferta |
+
+#### 7. Tabela `transacoes`
+Registro cronológico e imutável de todas as movimentações financeiras de moedas estudantis (tanto bonificações de professores quanto resgates de alunos).
+
+| Coluna | Tipo | Modificadores | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | `PK`, `IDENTITY`, `NOT NULL` | Identificador único da transação |
+| `valor` | `INTEGER` | `NOT NULL`, `CHECK (valor > 0)` | Quantidade de moedas movimentadas |
+| `motivo` | `VARCHAR(1000)`| `NOT NULL` | Justificativa do envio ou descrição do benefício resgatado |
+| `data` | `TIMESTAMP` | `NOT NULL` | Data e hora exatas da ocorrência da transação |
+| `tipo` | `VARCHAR(30)` | `NOT NULL` | `ENVIO_MOEDAS` ou `RESGATE_VANTAGEM` |
+| `codigo_cupom` | `VARCHAR(50)` | `NULLABLE` | Código alfanumérico único para conferência de resgate presencial |
+| `professor_id` | `BIGINT` | `FK -> professores(id)`, `NULLABLE` | Remetente docente (apenas em `ENVIO_MOEDAS`) |
+| `aluno_id` | `BIGINT` | `FK -> alunos(id)`, `NOT NULL` | Aluno beneficiado ou resgatante |
+| `vantagem_id` | `BIGINT` | `FK -> vantagens(id)`, `NULLABLE` | Vantagem associada (apenas em `RESGATE_VANTAGEM`) |
+
+---
+
+### Mapeamento Objeto-Relacional (JPA)
+
+1. **Estratégia de Herança (`JOINED`)**:
+   - `Utilizador` mapeado como `@Inheritance(strategy = InheritanceType.JOINED)`.
+   - Tabelas filhas (`alunos`, `professores`, `empresas_parceiras`) possuem sua própria tabela contendo colunas especializadas, referenciando a tabela pai `utilizadores` via `id`.
+   - Vantagem: Garante 3FN (Terceira Forma Normal), elimina colunas nulas em disco e preserva a integridade de credenciais de login em tabela única.
+
+2. **Garantia de Transacionalidade (ACID)**:
+   - Toda operação de débito e crédito no saldo (`AlunoService.resgatarVantagem` e `ProfessorService.enviarMoedas`) é executada sob `@Transactional(rollbackFor = Exception.class)`.
+   - Se ocorrer qualquer exceção durante a persistência ou débito de moedas, a transação sofre rollback automático integral.
+
+---
+
+### Código PlantUML (Modelo ER)
+
+```plantuml
+@startuml
+skinparam linetype ortho
+
+entity "instituicoes" as instituicoes {
+  * id : BIGINT <<PK, auto_increment>>
+  --
+  * nome : VARCHAR(255) <<UNIQUE>>
+}
+
+entity "utilizadores" as utilizadores {
+  * id : BIGINT <<PK, auto_increment>>
+  --
+  * login : VARCHAR(100) <<UNIQUE>>
+  * senha : VARCHAR(255)
+  * tipo : VARCHAR(20)
+}
+
+entity "alunos" as alunos {
+  * id : BIGINT <<PK, FK>>
+  --
+  * nome : VARCHAR(255)
+  * email : VARCHAR(255) <<UNIQUE>>
+  * cpf : VARCHAR(14) <<UNIQUE>>
+  * rg : VARCHAR(20)
+  * endereco : VARCHAR(255)
+  * curso : VARCHAR(100)
+  * saldo : INTEGER
+  * instituicao_id : BIGINT <<FK>>
+}
+
+entity "professores" as professores {
+  * id : BIGINT <<PK, FK>>
+  --
+  * nome : VARCHAR(255)
+  * cpf : VARCHAR(14) <<UNIQUE>>
+  * departamento : VARCHAR(100)
+  * saldo : INTEGER
+  * instituicao_id : BIGINT <<FK>>
+}
+
+entity "empresas_parceiras" as empresas {
+  * id : BIGINT <<PK, FK>>
+  --
+  * nome : VARCHAR(255)
+  * email : VARCHAR(255) <<UNIQUE>>
+}
+
+entity "vantagens" as vantagens {
+  * id : BIGINT <<PK, auto_increment>>
+  --
+  * descricao : VARCHAR(1000)
+  * foto : VARCHAR(2000)
+  * custo : INTEGER
+  * empresa_id : BIGINT <<FK>>
+}
+
+entity "transacoes" as transacoes {
+  * id : BIGINT <<PK, auto_increment>>
+  --
+  * valor : INTEGER
+  * motivo : VARCHAR(1000)
+  * data : TIMESTAMP
+  * tipo : VARCHAR(30)
+  codigo_cupom : VARCHAR(50)
+  professor_id : BIGINT <<FK, NULLABLE>>
+  * aluno_id : BIGINT <<FK>>
+  vantagem_id : BIGINT <<FK, NULLABLE>>
+}
+
+utilizadores ||--|| alunos : "JOINED PK=FK"
+utilizadores ||--|| professores : "JOINED PK=FK"
+utilizadores ||--|| empresas : "JOINED PK=FK"
+
+instituicoes ||--o{ alunos : "1:N"
+instituicoes ||--o{ professores : "1:N"
+empresas ||--o{ vantagens : "1:N"
+professores ||--o{ transacoes : "0..1:N (envios)"
+alunos ||--o{ transacoes : "1:N (beneficiário/resgates)"
+vantagens ||--o{ transacoes : "0..1:N (origem do resgate)"
+
+@enduml
+```
+

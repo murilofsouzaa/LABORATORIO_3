@@ -10,8 +10,8 @@
 [![Arquitetura](https://img.shields.io/badge/Arquitetura-MVC-brightgreen)](#-arquitetura-do-sistema)
 [![Backend](https://img.shields.io/badge/Backend-Spring%20Boot%20%7C%20Java%2025-red)](docs/tecnologias.md)
 [![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript%20%7C%20Vite-blue)](docs/tecnologias.md)
-[![Sprint](https://img.shields.io/badge/Sprint-01%20Conclu%C3%ADda-success)](docs/sprints.md)
-[![Modelagem](https://img.shields.io/badge/UML-PlantUML-orange)](docs/modelagem.md)
+[![Sprint](https://img.shields.io/badge/Sprints-01%2C%2002%20e%2003%20Conclu%C3%ADdas-success)](docs/sprints.md)
+[![Modelagem](https://img.shields.io/badge/UML-PlantUML%20%7C%20DER-orange)](docs/modelagem.md)
 [![Documentação](https://img.shields.io/badge/Docs-Central%20de%20Documenta%C3%A7%C3%A3o-blueviolet)](docs/README.md)
 
 ---
@@ -147,25 +147,27 @@ LABORATORIO_3/
     ├── modelagem.md                   # Modelagem detalhada: Casos de Uso, Classes e Componentes (UML e Mermaid)
     ├── arquitetura.md                 # Decisões arquiteturais Macro e Micro, e diagramas de sequência dos fluxos
     ├── tecnologias.md                 # Detalhamento de tecnologias, justificativas e tutorial para a Sprint 3
-    ├── sprints.md                     # Cronograma das Sprints (Lab03S01, Lab03S02, Lab03S03) e avaliação
+    ├── apresentacao.md                # Roteiro de Apresentação (Slides de Arquitetura & Salão de Tecnologias)
+    ├── sprints.md                     # Cronograma das Sprints (Lab03S01, Lab03S02, Lab03S03) e entregáveis
     └── diagramas/                     # Códigos-fonte e imagens renderizadas
         ├── casos_de_uso.puml          # Código PlantUML do Diagrama de Casos de Uso
         ├── casos_de_uso.svg           # Renderização vetorial dos Casos de Uso
         ├── classes.puml               # Código PlantUML do Diagrama de Classes
         ├── classes.svg                # Renderização vetorial das Classes
         ├── componentes.puml           # Código PlantUML do Diagrama de Componentes
-        └── componentes.svg            # Renderização vetorial dos Componentes
+        ├── componentes.svg            # Renderização vetorial dos Componentes
+        └── modelo_er.puml             # Código PlantUML do Modelo Entidade-Relacionamento (DER)
 ```
 
 ---
 
 ## 🚀 Planejamento das Sprints
 
-- **Sprint 1 (Lab03S01) - [Concluída]**: Modelagem do sistema (Diagrama de Casos de Uso, Histórias de Usuário, Diagrama de Classes e Diagrama de Componentes).
-- **Sprint 2 (Lab03S02) - [Em Andamento]**: Modelo ER, persistência relacional (ORM/DAO) e CRUDs funcionais de aluno e empresa parceira (front-end e back-end integrados).
-- **Sprint 3 (Lab03S03) - [A Iniciar]**: CRUDs finais de aluno e empresa parceira, apresentação da arquitetura do sistema e camada de persistência (slides) e Salão de Tecnologias (apresentação de 20 minutos).
+- **Sprint 1 (Lab03S01) - [Concluída]**: Modelagem do sistema (Diagrama de Casos de Uso, Histórias de Usuário BDD, Diagrama de Classes e Diagrama de Componentes).
+- **Sprint 2 (Lab03S02) - [Concluída]**: Modelo ER (DER), persistência relacional (Spring Data JPA / Hibernate) e CRUDs funcionais de aluno e empresa parceira (front-end e back-end integrados).
+- **Sprint 3 (Lab03S03) - [Concluída]**: CRUDs finais integrados, mecanismo de transações e notificações, roteiro de apresentação da arquitetura/persistência e tutorial de 20 minutos para o Salão de Tecnologias ([docs/apresentacao.md](docs/apresentacao.md)).
 
-Consulte o documento [docs/sprints.md](docs/sprints.md) para detalhes completos de cronograma e critérios de avaliação.
+Consulte o documento [docs/sprints.md](docs/sprints.md) para detalhes completos de cronograma e entregáveis.
 
 ---
 

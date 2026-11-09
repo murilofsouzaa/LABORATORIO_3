@@ -18,10 +18,11 @@ Bem-vindo à documentação oficial do projeto **Sistema de Moeda Estudantil**.
    - Requisitos Funcionais (RF01 a RF11) e Não-Funcionais (RNF01 a RNF06)
    - Histórias de Usuário (HU01 a HU06) com Critérios de Aceitação em BDD / Gherkin
 
-2. [Modelagem do Sistema (Sprint 1 - Lab03S01)](modelagem.md)
+2. [Modelagem do Sistema (Sprint 1 e Sprint 2)](modelagem.md)
    - **Diagrama de Casos de Uso**: PlantUML, visualização gráfica em SVG, diagrama Mermaid e tabela detalhada (UC1 a UC6)
    - **Diagrama de Classes**: PlantUML, SVG, diagrama Mermaid, dicionário de classes, atributos, métodos e multiplicidades
    - **Diagrama de Componentes**: PlantUML, SVG, diagrama Mermaid e detalhamento da arquitetura MVC
+   - **Modelo Entidade-Relacionamento (Modelo ER / DER)**: PlantUML, diagrama Mermaid, mapeamento de chaves (PK/FK), tabelas e integridade referencial
 
 3. [Arquitetura do Sistema e Decisões de Design (Macro e Micro)](arquitetura.md)
    - Padrão Arquitetural MVC (Model-View-Controller)
@@ -44,17 +45,24 @@ Bem-vindo à documentação oficial do projeto **Sistema de Moeda Estudantil**.
    - Sprint 3 (Lab03S03): CRUDs Finais, Apresentação e Salão de Tecnologias
    - Critérios de Avaliação da Disciplina
 
+6. [Roteiro de Apresentação e Salão de Tecnologias (Sprint 3 - Lab03S03)](apresentacao.md)
+   - Slides da Arquitetura e Camada de Persistência (com fala e justificativas)
+   - Tutorial de 20 minutos para o Salão de Tecnologias (Spring Boot + React + TypeScript + JPA)
+   - Roteiro passo a passo da Demonstração Prática ao Vivo (Live Demo)
+   - Respostas antecipadas para as perguntas prováveis da banca
+
 ---
 
 ## 📂 Diretório de Diagramas
 
 Todos os diagramas gerados estão disponíveis na pasta [`diagramas/`](diagramas/):
 
-| Diagrama | Código-Fonte PlantUML | Visualização Vetorial SVG |
+| Diagrama | Código-Fonte PlantUML | Visualização Vetorial SVG / Render |
 | :--- | :---: | :---: |
 | **Casos de Uso** | [`casos_de_uso.puml`](diagramas/casos_de_uso.puml) | [SVG](diagramas/casos_de_uso.svg) |
 | **Diagrama de Classes** | [`classes.puml`](diagramas/classes.puml) | [SVG](diagramas/classes.svg) |
 | **Diagrama de Componentes** | [`componentes.puml`](diagramas/componentes.puml) | [SVG](diagramas/componentes.svg) |
+| **Modelo ER (DER)** | [`modelo_er.puml`](diagramas/modelo_er.puml) | [Mermaid no docs/modelagem.md](modelagem.md#4-modelo-entidade-relacionamento-modelo-er--der) |
 
 ---
 
