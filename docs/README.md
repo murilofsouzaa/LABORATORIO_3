@@ -1,6 +1,12 @@
 # 📚 Central de Documentação - Sistema de Moeda Estudantil
 
-Bem-vindo à documentação oficial do projeto **Sistema de Moeda Estudantil**, desenvolvido para a disciplina de **Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3)** da **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**.
+> **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**  
+> **Curso de Engenharia de Software**  
+> **Disciplina**: Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3 - 2º Semestre/2026)  
+> **Docente**: Profa. Milena Menezes Adão  
+> **Autores / Integrantes**: **Murilo Freitas** e **Letícia Figueiredo**  
+
+Bem-vindo à documentação oficial do projeto **Sistema de Moeda Estudantil**.
 
 ---
 
@@ -17,9 +23,11 @@ Bem-vindo à documentação oficial do projeto **Sistema de Moeda Estudantil**, 
    - **Diagrama de Classes**: PlantUML, SVG, diagrama Mermaid, dicionário de classes, atributos, métodos e multiplicidades
    - **Diagrama de Componentes**: PlantUML, SVG, diagrama Mermaid e detalhamento da arquitetura MVC
 
-3. [Arquitetura do Sistema e Decisões de Design](arquitetura.md)
+3. [Arquitetura do Sistema e Decisões de Design (Macro e Micro)](arquitetura.md)
    - Padrão Arquitetural MVC (Model-View-Controller)
-   - Responsabilidades por Camada (Views, Controllers, Models)
+   - **Justificativas das Escolhas Arquiteturais**:
+     - *Macro-Arquitetura*: MVC, Banco Relacional ACID, Serviço Assíncrono de E-mail, Camada DAO/ORM
+     - *Micro-Arquitetura*: Herança com `Utilizador`, Especializações Coesas (`Aluno`, `Professor`, `EmpresaParceira`), Entidade Imutável `Transacao`, Código Único Bilateral de Cupom, Encapsulamento Rico (*Tell, Don't Ask*)
    - Diagrama de Sequência: Envio de Moedas (Professor -> Aluno)
    - Diagrama de Sequência: Resgate de Vantagens (Aluno -> Empresa Parceira)
    - Integração com Serviços Externos (Banco de Dados e E-mail)
@@ -44,9 +52,7 @@ Todos os diagramas gerados estão disponíveis na pasta [`diagramas/`](diagramas
 
 ---
 
-## 🛠️ Tecnologias e Padrões Adotados na Documentação
+## 👥 Autores do Projeto
 
-- **PlantUML**: Modelagem UML padronizada conforme especificação da disciplina.
-- **SVG Vector Graphics**: Renderização em alta definição para visualização direta em qualquer visualizador Markdown ou navegador.
-- **Mermaid.js**: Diagramas interativos renderizáveis nativamente no GitHub e em editores compatíveis.
-- **BDD (Behavior-Driven Development)**: Critérios de aceitação estruturados na sintaxe *Dado / Quando / Então* para as Histórias de Usuário.
+* **Murilo Freitas** — Engenharia de Software (PUC Minas)
+* **Letícia Figueiredo** — Engenharia de Software (PUC Minas)

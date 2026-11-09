@@ -1,5 +1,11 @@
 # 🚀 Planejamento e Acompanhamento das Sprints
 
+> **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**  
+> **Curso de Engenharia de Software**  
+> **Disciplina**: Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3 - 2º Semestre/2026)  
+> **Docente**: Profa. Milena Menezes Adão  
+> **Autores / Integrantes**: **Murilo Freitas** e **Letícia Figueiredo**  
+
 Este documento detalha o planejamento, cronograma e acompanhamento das três Sprints de desenvolvimento do **Sistema de Moeda Estudantil**, em conformidade com as diretrizes do **Laboratório 3 de Projeto de Software** (PUC Minas - Segundo Semestre/2026 - Profa. Milena Menezes Adão).
 
 ---

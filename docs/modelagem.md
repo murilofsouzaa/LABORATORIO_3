@@ -1,5 +1,11 @@
 # 📐 Modelagem do Sistema (Sprint 1 - Lab03S01)
 
+> **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**  
+> **Curso de Engenharia de Software**  
+> **Disciplina**: Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3 - 2º Semestre/2026)  
+> **Docente**: Profa. Milena Menezes Adão  
+> **Autores / Integrantes**: **Murilo Freitas** e **Letícia Figueiredo**  
+
 Este documento consolida os artefatos de modelagem de software produzidos na **Sprint 1 (Lab03S01)** para o **Sistema de Moeda Estudantil**, de acordo com as especificações da disciplina de **Laboratório de Desenvolvimento de Software / Projeto de Software** (PUC Minas).
 
 ---

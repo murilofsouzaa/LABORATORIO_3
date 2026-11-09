@@ -4,6 +4,7 @@
 > **Curso de Engenharia de Software**  
 > **Disciplina**: Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3 - 2º Semestre/2026)  
 > **Docente**: Profa. Milena Menezes Adão  
+> **Autores / Integrantes**: **Murilo Freitas** e **Letícia Figueiredo**  
 
 [![PUC Minas](https://img.shields.io/badge/PUC%20Minas-Engenharia%20de%20Software-blue)](https://www.pucminas.br)
 [![Arquitetura](https://img.shields.io/badge/Arquitetura-MVC-brightgreen)](#-arquitetura-do-sistema)
@@ -18,6 +19,13 @@
 O **Sistema de Moeda Estudantil** é uma plataforma desenvolvida para incentivar e reconhecer o mérito acadêmico dos estudantes universitários por meio de uma moeda virtual. 
 
 A moeda virtual é distribuída semestralmente pelos professores aos alunos como forma de reconhecimento pelo bom desempenho, participação e engajamento acadêmico. Com as moedas acumuladas, os alunos podem resgatar benefícios e vantagens (como descontos em mensalidades, restaurantes universitários e aquisição de materiais) oferecidos por empresas parceiras cadastradas.
+
+---
+
+## 👥 Integrantes e Autores do Projeto
+
+* **Murilo Freitas** — Engenharia de Software (PUC Minas)
+* **Letícia Figueiredo** — Engenharia de Software (PUC Minas)
 
 ---
 
@@ -86,14 +94,24 @@ Modela a arquitetura em camadas **MVC (Model-View-Controller)** e as conexões c
 
 ---
 
-## 🏛️ Arquitetura do Sistema
+## 🏛️ Justificativas das Escolhas Arquiteturais (Macro e Micro)
 
-O sistema é concebido sob a arquitetura **MVC (Model-View-Controller)**:
-- **Views (Frontend)**: Camada de apresentação responsiva responsável pelas interfaces dos usuários (Aluno, Professor, Empresa Parceira).
-- **Controllers**: Orquestração do fluxo de controle, validação de regras de acesso e disparo de ações negociais e notificações.
-- **Models**: Camada de domínio contendo a lógica das entidades (`Aluno`, `Professor`, `EmpresaParceira`, `Transacao`, `Vantagem`, `Instituicao`) e acesso à base de dados.
-- **Base de Dados**: Persistência de dados com integridade referencial e suporte a transações ACID para garantia de consistência de saldos.
-- **Serviço de Email**: Notificações automáticas ao receber moedas e envio simultâneo de cupons criptográficos ao aluno e à empresa parceira para troca presencial.
+Para atender tanto aos requisitos acadêmicos quanto às exigências de robustez, escalabilidade e manutenibilidade, a arquitetura foi fundamentada em decisões técnicas bem delimitadas:
+
+### 🌐 Decisões Macro-Arquiteturais (Nível de Sistema)
+1. **Padrão Arquitetural MVC**: Separação rigorosa de responsabilidades entre Apresentação (`Views`), Controle (`Controllers`) e Domínio (`Models`), facilitando manutenção, testes isolados e desenvolvimento em paralelo pelos membros da equipe.
+2. **Banco de Dados Relacional com Transações ACID**: A movimentação de moedas virtuais possui natureza financeira. O uso de transações ACID impede o problema de gasto duplo (*double-spending*), garante atomicidade entre débito e crédito, e assegura integridade referencial estrita.
+3. **Serviço de Notificação Desacoplado (E-mail Assíncrono)**: O disparo de e-mails possui latência imprevisível. O desacoplamento da thread HTTP garante respostas rápidas ao usuário e permite políticas de reprocessamento (*retry*) sem comprometer a transação financeira no banco.
+4. **Camada de Acesso a Dados Isolada (DAO/ORM)**: Isola o motor SQL da lógica de negócio, assegurando portabilidade entre ambientes e facilidade para mockar dados em testes automatizados.
+
+### 🔬 Decisões Micro-Arquiteturais (Nível de Classes e Código)
+1. **Herança a partir de `Utilizador` (Classe Abstrata)**: Evita redundância de código em credenciais (`login`, `senha`, `autenticar()`), possibilita autenticação polimórfica e simplifica o controle de acesso por perfis (RBAC).
+2. **Separação em Entidades Especializadas (`Aluno`, `Professor`, `EmpresaParceira`)**: Atende ao Princípio de Responsabilidade Única (SRP) e alta coesão, eliminando colunas nulas no banco e condicionais excessivas no código.
+3. **Entidade Imutável `Transacao`**: Cada movimentação financeira (bonificação ou resgate) é registrada como uma entidade imutável de log, contendo data, valor, partes envolvidas e justificativa obrigatória, viabilizando o extrato e a rastreabilidade total.
+4. **Geração Bilateral de Código Único de Cupom**: Mecanismo criptográfico que gera um código de cupom compartilhado entre aluno e empresa parceira por e-mail, garantindo validação presencial antifraude e preservando a privacidade dos dados do estudante.
+5. **Encapsulamento Estrito e Modelo Rico (*Tell, Don't Ask*)**: Proteção dos atributos privados com métodos de negócio nas próprias entidades (`enviarMoedas()`, `resgatarVantagem()`), impedindo manipulação direta e estados inconsistentes de saldo.
+
+> Para a análise aprofundada de prós, contras e alternativas descartadas, acesse o documento completo: [docs/arquitetura.md](docs/arquitetura.md#2-justificativas-das-escolhas-arquiteturais).
 
 ---
 
@@ -106,7 +124,7 @@ LABORATORIO_3/
     ├── README.md                      # Índice geral da documentação
     ├── requisitos.md                  # Regras de Negócio (RN01-RN09), RFs, RNFs e Histórias de Usuário (HU01-HU06)
     ├── modelagem.md                   # Modelagem detalhada: Casos de Uso, Classes e Componentes (UML e Mermaid)
-    ├── arquitetura.md                 # Decisões arquiteturais MVC e diagramas de sequência dos fluxos
+    ├── arquitetura.md                 # Decisões arquiteturais Macro e Micro, e diagramas de sequência dos fluxos
     ├── sprints.md                     # Cronograma das Sprints (Lab03S01, Lab03S02, Lab03S03) e avaliação
     └── diagramas/                     # Códigos-fonte e imagens renderizadas
         ├── casos_de_uso.puml          # Código PlantUML do Diagrama de Casos de Uso
@@ -137,7 +155,6 @@ Consulte o documento [docs/sprints.md](docs/sprints.md) para detalhes completos 
 
 2. **Edição via PlantUML (VS Code)**:
    - Instale a extensão **PlantUML** (`jebbs.plantuml`) no VS Code.
-   - Certifique-se de possuir o Java e o Graphviz instalados.
    - Pressione `Alt + D` dentro de qualquer arquivo `.puml` para visualizar a prévia em tempo real.
 
 3. **Edição Online**:
@@ -147,4 +164,4 @@ Consulte o documento [docs/sprints.md](docs/sprints.md) para detalhes completos 
 
 ## 👨‍💻 Autores e Contribuições
 
-Projeto desenvolvido no âmbito da disciplina **Laboratório de Desenvolvimento de Software / Projeto de Software** da **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**.
+Projeto desenvolvido por **Murilo Freitas** e **Letícia Figueiredo** no âmbito da disciplina **Laboratório de Desenvolvimento de Software / Projeto de Software** da **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**.

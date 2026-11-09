@@ -1,5 +1,11 @@
 # 📋 Especificação de Requisitos e Histórias de Usuário
 
+> **Pontifícia Universidade Católica de Minas Gerais (PUC Minas)**  
+> **Curso de Engenharia de Software**  
+> **Disciplina**: Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3 - 2º Semestre/2026)  
+> **Docente**: Profa. Milena Menezes Adão  
+> **Autores / Integrantes**: **Murilo Freitas** e **Letícia Figueiredo**  
+
 Este documento detalha o escopo, as regras de negócio, os requisitos funcionais e não-funcionais, e as histórias de usuário do **Sistema de Moeda Estudantil**, em conformidade com a especificação do **Laboratório 3 de Projeto de Software** (PUC Minas).
 
 ---
