@@ -32,7 +32,13 @@ Bem-vindo à documentação oficial do projeto **Sistema de Moeda Estudantil**.
    - Diagrama de Sequência: Resgate de Vantagens (Aluno -> Empresa Parceira)
    - Integração com Serviços Externos (Banco de Dados e E-mail)
 
-4. [Planejamento e Acompanhamento de Sprints](sprints.md)
+4. [Tecnologias Adotadas e Guia da Stack](tecnologias.md)
+   - Stack do Backend (Java 25, Spring Boot, Spring Data JPA/Hibernate, H2/PostgreSQL, Jakarta Validation, JavaMailSender)
+   - Stack do Frontend (React, TypeScript, Vite)
+   - Justificativa técnica detalhada de cada escolha e comparativos
+   - Tutorial de Configuração e Execução para o Salão de Tecnologias (Sprint 03)
+
+5. [Planejamento e Acompanhamento de Sprints](sprints.md)
    - Sprint 1 (Lab03S01): Modelagem UML e Histórias de Usuário
    - Sprint 2 (Lab03S02): Modelo ER, Persistência (ORM/DAO) e CRUDs Iniciais
    - Sprint 3 (Lab03S03): CRUDs Finais, Apresentação e Salão de Tecnologias

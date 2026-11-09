@@ -8,6 +8,8 @@
 
 [![PUC Minas](https://img.shields.io/badge/PUC%20Minas-Engenharia%20de%20Software-blue)](https://www.pucminas.br)
 [![Arquitetura](https://img.shields.io/badge/Arquitetura-MVC-brightgreen)](#-arquitetura-do-sistema)
+[![Backend](https://img.shields.io/badge/Backend-Spring%20Boot%20%7C%20Java%2025-red)](docs/tecnologias.md)
+[![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript%20%7C%20Vite-blue)](docs/tecnologias.md)
 [![Sprint](https://img.shields.io/badge/Sprint-01%20Conclu%C3%ADda-success)](docs/sprints.md)
 [![Modelagem](https://img.shields.io/badge/UML-PlantUML-orange)](docs/modelagem.md)
 [![Documentação](https://img.shields.io/badge/Docs-Central%20de%20Documenta%C3%A7%C3%A3o-blueviolet)](docs/README.md)
@@ -18,7 +20,7 @@
 
 O **Sistema de Moeda Estudantil** é uma plataforma desenvolvida para incentivar e reconhecer o mérito acadêmico dos estudantes universitários por meio de uma moeda virtual. 
 
-A moeda virtual é distribuída semestralmente pelos professores aos alunos como forma de reconhecimento pelo bom desempenho, participação e engajamento acadêmico. Com as moedas acumuladas, os alunos podem resgatar benefícios e vantagens (como descontos em mensalidades, restaurantes universitários e aquisição de materiais) oferecidos por empresas parceiras cadastradas.
+A moeda virtual é distribuída semestralmente pelos professores aos alunos como forma de reconhecimento pelo bom desempenho, participação e engajamento acadêmico. Com as moedas acumuladas, os alunos podem resgatar benefícios e vantagens (como descontos em mensalidades, restaurantes universitários e aquisição de materiais didáticos) oferecidos por empresas parceiras cadastradas.
 
 ---
 
@@ -37,6 +39,21 @@ A moeda virtual é distribuída semestralmente pelos professores aos alunos como
 | **Professor** | Pré-cadastrado no sistema pela Instituição de Ensino. Recebe semestralmente 1.000 moedas (saldo cumulativo entre semestres). Distribui moedas para alunos com justificativa formal obrigatória e consulta seu extrato de envios. |
 | **Empresa Parceira** | Cadastra-se no sistema, autentica-se e registra vantagens (produtos/descontos com descrição, foto e custo em moedas). Recebe e-mail com código para validação presencial das vantagens resgatadas pelos alunos. |
 | **Instituição de Ensino** | Pré-cadastrada no sistema; fornece a relação do corpo docente para pré-registro e vincula cursos e departamentos. |
+
+---
+
+## 💻 Stack Tecnológica
+
+| Camada | Tecnologias Principais | Descrição e Papel |
+| :--- | :--- | :--- |
+| **Backend** | **Java 25**, **Spring Boot**, **Spring MVC**, **Spring Data JPA / Hibernate** | Framework corporativo robusto implementando a arquitetura MVC, serviços de negócio e persistência relacional. |
+| **Banco de Dados** | **H2 Database** (Memória/Dev) e **PostgreSQL** (Prod) | Persistência com integridade relacional, suporte transacional ACID e console web interativo (`/h2-console`). |
+| **Serviços & E-mail**| **JavaMailSender** (SMTP) | Disparo assíncrono de notificações de bonificação e envio de cupons de resgate. |
+| **Frontend** | **React**, **TypeScript**, **Vite**, **PostCSS** | Interface reativa, modular e tipada com inicialização instantânea e HMR ultrarrápido. |
+| **Qualidade & Testes**| **JUnit 5**, **Spring Boot Test**, **ESLint** | 11 testes de integração automatizados cobrindo todas as regras de negócio e integridade de saldo. |
+| **Modelagem** | **PlantUML**, **Mermaid.js**, **SVG** | Modelagem UML de Casos de Uso, Classes e Componentes com gráficos vetoriais. |
+
+> Consulte o documento completo com as justificativas e o roteiro do Salão de Tecnologias em: [docs/tecnologias.md](docs/tecnologias.md).
 
 ---
 
@@ -120,11 +137,16 @@ Para atender tanto aos requisitos acadêmicos quanto às exigências de robustez
 ```text
 LABORATORIO_3/
 ├── README.md                          # Visão geral do projeto e atalhos rápidos
+├── backend/                           # Aplicação Backend Spring Boot (Java 25)
+│   ├── src/main/java/com/lab03/demo/  # Modelos JPA, Repositories, Services e Controllers REST
+│   └── src/test/java/com/lab03/demo/  # Testes de integração automatizados
+├── frontend/                          # Aplicação Frontend React (TypeScript + Vite)
 └── docs/                              # Central de documentação do sistema
     ├── README.md                      # Índice geral da documentação
     ├── requisitos.md                  # Regras de Negócio (RN01-RN09), RFs, RNFs e Histórias de Usuário (HU01-HU06)
     ├── modelagem.md                   # Modelagem detalhada: Casos de Uso, Classes e Componentes (UML e Mermaid)
     ├── arquitetura.md                 # Decisões arquiteturais Macro e Micro, e diagramas de sequência dos fluxos
+    ├── tecnologias.md                 # Detalhamento de tecnologias, justificativas e tutorial para a Sprint 3
     ├── sprints.md                     # Cronograma das Sprints (Lab03S01, Lab03S02, Lab03S03) e avaliação
     └── diagramas/                     # Códigos-fonte e imagens renderizadas
         ├── casos_de_uso.puml          # Código PlantUML do Diagrama de Casos de Uso
@@ -140,25 +162,29 @@ LABORATORIO_3/
 ## 🚀 Planejamento das Sprints
 
 - **Sprint 1 (Lab03S01) - [Concluída]**: Modelagem do sistema (Diagrama de Casos de Uso, Histórias de Usuário, Diagrama de Classes e Diagrama de Componentes).
-- **Sprint 2 (Lab03S02) - [A Iniciar]**: Modelo ER, definição e implementação da estratégia de acesso ao banco de dados (ORM/DAO), e CRUDs de aluno e empresa parceira (versão inicial: front-end e comunicação com back-end).
+- **Sprint 2 (Lab03S02) - [Em Andamento]**: Modelo ER, persistência relacional (ORM/DAO) e CRUDs funcionais de aluno e empresa parceira (front-end e back-end integrados).
 - **Sprint 3 (Lab03S03) - [A Iniciar]**: CRUDs finais de aluno e empresa parceira, apresentação da arquitetura do sistema e camada de persistência (slides) e Salão de Tecnologias (apresentação de 20 minutos).
 
 Consulte o documento [docs/sprints.md](docs/sprints.md) para detalhes completos de cronograma e critérios de avaliação.
 
 ---
 
-## 🛠️ Como Visualizar e Editar os Diagramas
+## 🛠️ Como Executar o Projeto Localmente
 
-1. **Visualização Direta**:
-   - Os diagramas já estão renderizados em formato `.svg` na pasta [`docs/diagramas/`](docs/diagramas/) e podem ser abertos em qualquer navegador web ou visualizador de imagens.
-   - Os documentos Markdown possuem também representações em **Mermaid**, suportadas nativamente pelo GitHub.
+1. **Backend**:
+   ```bash
+   cd backend
+   ./mvnw test               # Executa a suíte de 11 testes automatizados
+   ./mvnw spring-boot:run    # Inicia a API REST na porta 8080 (http://localhost:8080)
+   ```
+   *Console H2*: Acesse `http://localhost:8080/h2-console` (JDBC URL: `jdbc:h2:mem:moeda_estudantil_db`, User: `sa`, Senha em branco).
 
-2. **Edição via PlantUML (VS Code)**:
-   - Instale a extensão **PlantUML** (`jebbs.plantuml`) no VS Code.
-   - Pressione `Alt + D` dentro de qualquer arquivo `.puml` para visualizar a prévia em tempo real.
-
-3. **Edição Online**:
-   - Copie o conteúdo de qualquer arquivo `.puml` e cole no [PlantText](https://www.planttext.com/) ou no [PlantUML Web Server](https://www.plantuml.com/plantuml/).
+2. **Frontend**:
+   ```bash
+   cd frontend
+   npm install               # Instala as dependências React/TypeScript
+   npm run dev               # Inicia o servidor Vite em http://localhost:5173
+   ```
 
 ---
 
