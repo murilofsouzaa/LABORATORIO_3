@@ -287,7 +287,7 @@ function App() {
 
                 <div className="grid grid-cols-3" style={{ gap: '0.75rem' }}>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#38bdf8' }}>E-mail</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#6ee7b7' }}>E-mail</span>
                     <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Disparo automático</span>
                   </div>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
