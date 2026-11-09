@@ -4,12 +4,13 @@ import type { Instituicao, UsuarioAutenticado } from '../types/api';
 import { X, LogIn, UserPlus, Building2, AlertCircle } from 'lucide-react';
 
 interface AuthModalProps {
+  initialTab?: 'LOGIN' | 'CADASTRO_ALUNO' | 'CADASTRO_EMPRESA';
   onClose: () => void;
   onLoginSuccess: (user: UsuarioAutenticado) => void;
 }
 
-export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess }) => {
-  const [tab, setTab] = useState<'LOGIN' | 'CADASTRO_ALUNO' | 'CADASTRO_EMPRESA'>('LOGIN');
+export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'LOGIN', onClose, onLoginSuccess }) => {
+  const [tab, setTab] = useState<'LOGIN' | 'CADASTRO_ALUNO' | 'CADASTRO_EMPRESA'>(initialTab);
   const [instituicoes, setInstituicoes] = useState<Instituicao[]>([]);
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState<string | null>(null);

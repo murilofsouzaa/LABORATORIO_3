@@ -12,6 +12,12 @@ function App() {
   });
 
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalTab, setAuthModalTab] = useState<'LOGIN' | 'CADASTRO_ALUNO' | 'CADASTRO_EMPRESA'>('LOGIN');
+
+  const openAuth = (tab: 'LOGIN' | 'CADASTRO_ALUNO' | 'CADASTRO_EMPRESA' = 'LOGIN') => {
+    setAuthModalTab(tab);
+    setAuthModalOpen(true);
+  };
 
   useEffect(() => {
     if (usuario) {
@@ -139,14 +145,14 @@ function App() {
 
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button
-                  onClick={() => setAuthModalOpen(true)}
+                  onClick={() => openAuth('LOGIN')}
                   className="btn btn-primary"
                   style={{ padding: '0.85rem 2rem', fontSize: '1rem' }}
                 >
                   Acessar Plataforma
                 </button>
                 <button
-                  onClick={() => setAuthModalOpen(true)}
+                  onClick={() => openAuth('CADASTRO_ALUNO')}
                   className="btn btn-secondary"
                   style={{ padding: '0.85rem 2rem', fontSize: '1rem' }}
                 >
@@ -155,171 +161,120 @@ function App() {
               </div>
             </div>
 
-            {/* BENTO GRID */}
-            <div className="bento-grid">
-              {/* Item 1: Alunos */}
-              <div className="bento-card col-span-7">
+            {/* FEATURE GRID */}
+            <div className="feature-grid">
+              {/* Card 1: Alunos */}
+              <div className="feature-card">
                 <div>
-                  <h3 className="bento-title">Para Alunos</h3>
-                  <p className="bento-desc">
-                    Receba moedas em reconhecimento por dedicação em aula, acompanhe seu saldo em tempo real no extrato e troque por descontos em mensalidades, alimentação e materiais didáticos.
+                  <span className="feature-tag feature-tag-aluno">Estudantes</span>
+                  <h3 className="feature-title">Para Alunos</h3>
+                  <p className="feature-desc">
+                    Receba moedas pelo seu mérito e dedicação em aula, acompanhe cada movimentação no extrato e resgate benefícios em parceiros credenciados.
                   </p>
+                  <ul className="feature-list">
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Extrato com atualização de saldo em tempo real</span>
+                    </li>
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Catálogo com ofertas de parceiros credenciados</span>
+                    </li>
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Geração de cupons com envio imediato por e-mail</span>
+                    </li>
+                  </ul>
                 </div>
-
-                <div className="bento-widget">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
-                      SALDO DISPONÍVEL
-                    </span>
-                    <span
-                      style={{
-                        background: '#fffbeb',
-                        color: '#92400e',
-                        border: '1px solid #fef08a',
-                        padding: '3px 10px',
-                        borderRadius: '12px',
-                        fontSize: '0.8rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      250 moedas
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      background: '#ffffff',
-                      padding: '0.85rem 1rem',
-                      borderRadius: '10px',
-                      border: '1px solid #e6e8f2',
-                    }}
-                  >
-                    <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-main)' }}>
-                      +100 moedas • Prof. Carlos Drummond
-                    </div>
-                    <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                      "Destaque na apresentação do seminário prático de software."
-                    </div>
-                  </div>
-                </div>
+                <button
+                  onClick={() => openAuth('CADASTRO_ALUNO')}
+                  className="feature-btn"
+                >
+                  Cadastrar como Aluno
+                </button>
               </div>
 
-              {/* Item 2: Professores */}
-              <div className="bento-card col-span-5">
+              {/* Card 2: Professores */}
+              <div className="feature-card">
                 <div>
-                  <h3 className="bento-title">Para Professores</h3>
-                  <p className="bento-desc">
-                    Receba 1.000 moedas a cada início de semestre com saldo cumulativo e bonifique seus alunos com justificativa formal de mérito.
+                  <span className="feature-tag feature-tag-professor">Docentes</span>
+                  <h3 className="feature-title">Para Professores</h3>
+                  <p className="feature-desc">
+                    Reconheça a dedicação dos discentes com envio de moedas acompanhado de justificativa formal de mérito acadêmico.
                   </p>
+                  <ul className="feature-list">
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>1.000 moedas a cada início de semestre letivo</span>
+                    </li>
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Saldo cumulativo permanente sem perda de saldo</span>
+                    </li>
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Notificação automática ao aluno a cada reconhecimento</span>
+                    </li>
+                  </ul>
                 </div>
-
-                <div className="bento-widget" style={{ background: '#fffbeb', borderColor: '#fde68a' }}>
-                  <div
-                    style={{
-                      fontSize: '2.1rem',
-                      fontWeight: 800,
-                      color: '#92400e',
-                      display: 'flex',
-                      alignItems: 'baseline',
-                      gap: '0.4rem',
-                    }}
-                  >
-                    <span>1.000</span>
-                    <span style={{ fontSize: '0.85rem', color: '#78350f', fontWeight: 600 }}>moedas por semestre</span>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '0.8rem',
-                      color: '#78350f',
-                      background: 'rgba(254, 243, 199, 0.85)',
-                      padding: '0.55rem',
-                      borderRadius: '8px',
-                      border: '1px solid #fef08a',
-                    }}
-                  >
-                    Justificativa de reconhecimento obrigatória a cada bonificação.
-                  </div>
-                </div>
+                <button
+                  onClick={() => openAuth('LOGIN')}
+                  className="feature-btn"
+                >
+                  Acessar Painel Docente
+                </button>
               </div>
 
-              {/* Item 3: Empresas Parceiras */}
-              <div className="bento-card col-span-5">
+              {/* Card 3: Empresas */}
+              <div className="feature-card">
                 <div>
-                  <h3 className="bento-title">Para Empresas Parceiras</h3>
-                  <p className="bento-desc">
-                    Cadastre produtos e descontos no catálogo e realize a conferência presencial de cupons de resgate no balcão.
+                  <span className="feature-tag feature-tag-empresa">Parceiros</span>
+                  <h3 className="feature-title">Para Empresas</h3>
+                  <p className="feature-desc">
+                    Cadastre suas vantagens no ecossistema acadêmico, atraia estudantes universitários e valide cupons no balcão de atendimento.
                   </p>
+                  <ul className="feature-list">
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Divulgação no catálogo oficial para todos os alunos</span>
+                    </li>
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Cadastro ágil de produtos, descontos e fotos</span>
+                    </li>
+                    <li className="feature-item">
+                      <span className="feature-check">✓</span>
+                      <span>Validação rápida de cupons por código único</span>
+                    </li>
+                  </ul>
                 </div>
-
-                <div className="bento-widget">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)' }}>CUPOM PRESENCIAL</span>
-                    <span
-                      style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        color: '#047857',
-                        background: '#ecfdf5',
-                        padding: '2px 8px',
-                        borderRadius: '8px',
-                        border: '1px solid #a7f3d0',
-                      }}
-                    >
-                      VÁLIDO
-                    </span>
-                  </div>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.06em', color: 'var(--primary)' }}>
-                    CUPOM-6E6FACD8
-                  </div>
-                  <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>
-                    20% OFF em Livros • Aluno: Murilo Freitas
-                  </span>
-                </div>
+                <button
+                  onClick={() => openAuth('CADASTRO_EMPRESA')}
+                  className="feature-btn"
+                >
+                  Cadastrar Empresa Parceira
+                </button>
               </div>
+            </div>
 
-              {/* Item 4: Validação e Notificações */}
-              <div className="bento-card bento-card-dark col-span-7">
-                <div>
-                  <h3 className="bento-title" style={{ color: 'var(--text-main)' }}>Validação e Notificações</h3>
-                  <p className="bento-desc" style={{ color: 'var(--text-muted)' }}>
-                    Controle seguro de saldos, histórico completo de movimentações e envio automático de cupons por e-mail para conferência presencial.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-3" style={{ gap: '0.75rem' }}>
-                  <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--primary)' }}>E-mail</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Disparo automático</span>
-                  </div>
-                  <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#047857' }}>Código Único</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Validação presencial</span>
-                  </div>
-                  <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#b45309' }}>Extrato</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Histórico detalhado</span>
-                  </div>
-                </div>
+            {/* SEGURANÇA E INTEGRIDADE INSTITUCIONAL */}
+            <div className="system-trust-strip">
+              <div className="system-trust-header">
+                <h3>Transparência e Governança do Ecossistema</h3>
+                <p>Estrutura segura projetada para integrar estudantes, docentes e o comércio parceiro com total rastreabilidade.</p>
               </div>
-
-              {/* Item 5: Instituições Parceiras */}
-              <div className="col-span-12">
-                <div className="bento-strip">
-                  <div>
-                    <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.2rem' }}>
-                      Instituições de Ensino Superior
-                    </h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      Cadastro corporativo de docentes, departamentos acadêmicos e validação dos cursos matriculados.
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={() => setAuthModalOpen(true)}
-                    className="btn btn-primary"
-                    style={{ padding: '0.65rem 1.4rem', fontSize: '0.875rem' }}
-                  >
-                    Acessar Demonstração
-                  </button>
+              <div className="system-trust-grid">
+                <div className="system-trust-item">
+                  <h4>Operações Auditáveis</h4>
+                  <p>Cada transação de transferência ou resgate é registrada permanentemente, garantindo integridade de saldos sem inconsistências.</p>
+                </div>
+                <div className="system-trust-item">
+                  <h4>Comunicação Bilateral</h4>
+                  <p>Notificações automáticas por e-mail informam emissor e receptor com os dados da operação e código identificador do cupom.</p>
+                </div>
+                <div className="system-trust-item">
+                  <h4>Conferência Presencial</h4>
+                  <p>Códigos únicos de conferência garantem que cada vantagem resgatada seja validada pontualmente no balcão da empresa credenciada.</p>
                 </div>
               </div>
             </div>
@@ -353,6 +308,7 @@ function App() {
 
       {authModalOpen && (
         <AuthModal
+          initialTab={authModalTab}
           onClose={() => setAuthModalOpen(false)}
           onLoginSuccess={handleLoginSuccess}
         />
