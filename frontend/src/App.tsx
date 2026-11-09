@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import type { UsuarioAutenticado } from './types/api';
-import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
 import { AlunoDashboard } from './components/AlunoDashboard';
 import { ProfessorDashboard } from './components/ProfessorDashboard';
 import { EmpresaDashboard } from './components/EmpresaDashboard';
-import { Coins, GraduationCap, Award, Building2, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 
 function App() {
   const [usuario, setUsuario] = useState<UsuarioAutenticado | null>(() => {
@@ -40,15 +38,58 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar
-        usuario={usuario}
-        onLogout={handleLogout}
-        onOpenAuth={() => setAuthModalOpen(true)}
-      />
-
       <main className="main-content">
         {usuario ? (
           <>
+            {/* Barra de Sessão Discreta */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingBottom: '1.25rem',
+                marginBottom: '2rem',
+                borderBottom: '1px solid var(--border)',
+                flexWrap: 'wrap',
+                gap: '1rem',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+                <span style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
+                  Moeda Estudantil
+                </span>
+                <span style={{ color: 'var(--border)' }}>•</span>
+                <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                  {usuario.nome}
+                </span>
+                <span className={`user-role-tag tag-${usuario.tipo.toLowerCase()}`}>
+                  {usuario.tipo}
+                </span>
+                {usuario.saldo !== undefined && usuario.saldo !== null && (
+                  <span
+                    style={{
+                      fontWeight: 700,
+                      fontSize: '0.85rem',
+                      color: 'var(--coin-gold-dark)',
+                      background: 'var(--coin-bg)',
+                      padding: '3px 12px',
+                      borderRadius: 'var(--radius-full)',
+                      border: '1px solid var(--coin-border)',
+                    }}
+                  >
+                    {usuario.saldo.toLocaleString('pt-BR')} moedas
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={handleLogout}
+                className="btn btn-secondary"
+                style={{ padding: '0.45rem 1rem', fontSize: '0.85rem' }}
+              >
+                Sair
+              </button>
+            </div>
+
             {usuario.tipo === 'ALUNO' && (
               <AlunoDashboard usuario={usuario} onUpdateSaldo={handleUpdateSaldo} />
             )}
@@ -60,189 +101,223 @@ function App() {
             )}
           </>
         ) : (
-          <div style={{ padding: '1rem 0 2rem' }}>
+          <div style={{ padding: '2.5rem 0 1rem' }}>
             {/* Landing Hero */}
-            <div className="hero-grid-bg" style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 3.25rem', position: 'relative', zIndex: 1 }}>
-              <div
+            <div
+              className="hero-grid-bg"
+              style={{
+                textAlign: 'center',
+                maxWidth: '820px',
+                margin: '0 auto 3.75rem',
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
+              <h1
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  background: '#ede9fe',
-                  color: '#6d28d9',
-                  border: '1px solid #ddd6fe',
-                  padding: '0.45rem 1.1rem',
-                  borderRadius: 'var(--radius-full)',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
+                  fontSize: '3.1rem',
+                  fontWeight: 800,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 1.15,
                   marginBottom: '1.25rem',
-                  boxShadow: '0 2px 8px rgba(109, 40, 217, 0.08)',
+                  color: 'var(--text-main)',
                 }}
               >
-                <Sparkles size={16} />
-                <span>Laboratório de Desenvolvimento de Software • PUC Minas</span>
-              </div>
-
-              <h1 style={{ fontSize: '3rem', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.15, marginBottom: '1.25rem', color: 'var(--text-main)' }}>
                 Reconhecimento do Mérito Estudantil por <span className="text-gradient">Moeda Virtual</span>
               </h1>
 
-              <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '2.25rem' }}>
+              <p
+                style={{
+                  fontSize: '1.15rem',
+                  color: 'var(--text-muted)',
+                  lineHeight: 1.6,
+                  marginBottom: '2.25rem',
+                }}
+              >
                 Uma economia acadêmica moderna onde professores bonificam alunos com moedas virtuais por participação e bom desempenho, e os alunos resgatam benefícios em empresas parceiras cadastradas.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <button onClick={() => setAuthModalOpen(true)} className="btn btn-primary" style={{ padding: '0.85rem 1.85rem', fontSize: '1rem' }}>
-                  <span>Acessar Plataforma</span>
-                  <ArrowRight size={18} />
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="btn btn-primary"
+                  style={{ padding: '0.85rem 2rem', fontSize: '1rem' }}
+                >
+                  Acessar Plataforma
                 </button>
-                <button onClick={() => setAuthModalOpen(true)} className="btn btn-secondary" style={{ padding: '0.85rem 1.85rem', fontSize: '1rem' }}>
-                  <span>Cadastrar Novo Aluno</span>
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="btn btn-secondary"
+                  style={{ padding: '0.85rem 2rem', fontSize: '1rem' }}
+                >
+                  Cadastrar Novo Aluno
                 </button>
               </div>
             </div>
 
-            {/* BENTO GRID REFACTORED */}
+            {/* BENTO GRID */}
             <div className="bento-grid">
-              {/* Item 1: Alunos (col-span-7) */}
+              {/* Item 1: Alunos */}
               <div className="bento-card col-span-7">
                 <div>
-                  <div className="bento-pill pill-aluno">
-                    <GraduationCap size={14} />
-                    <span>Mérito & Vantagens</span>
-                  </div>
                   <h3 className="bento-title">Para Alunos</h3>
                   <p className="bento-desc">
-                    Receba moedas em reconhecimento por dedicação em aula, acompanhe seu saldo em tempo real no extrato e troque por descontos em mensalidades, alimentação e materiais.
+                    Receba moedas em reconhecimento por dedicação em aula, acompanhe seu saldo em tempo real no extrato e troque por descontos em mensalidades, alimentação e materiais didáticos.
                   </p>
                 </div>
 
                 <div className="bento-widget">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
-                      CARTEIRA DIGITAL DE MÉRITO
+                      SALDO DISPONÍVEL
                     </span>
-                    <span style={{ background: '#fffbeb', color: '#92400e', border: '1px solid #fef08a', padding: '3px 10px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700 }}>
-                      ⭐ 250 moedas
+                    <span
+                      style={{
+                        background: '#fffbeb',
+                        color: '#92400e',
+                        border: '1px solid #fef08a',
+                        padding: '3px 10px',
+                        borderRadius: '12px',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      250 moedas
                     </span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', background: '#ffffff', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e6e8f2' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#ede9fe', color: '#6d28d9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Coins size={20} />
+                  <div
+                    style={{
+                      background: '#ffffff',
+                      padding: '0.85rem 1rem',
+                      borderRadius: '10px',
+                      border: '1px solid #e6e8f2',
+                    }}
+                  >
+                    <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                      +100 moedas • Prof. Carlos Drummond
                     </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-main)' }}>
-                        +100 moedas recebidas • Prof. Carlos Drummond
-                      </div>
-                      <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        "Destaque na apresentação do seminário prático de software."
-                      </div>
+                    <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                      "Destaque na apresentação do seminário prático de software."
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Item 2: Professores (col-span-5) */}
+              {/* Item 2: Professores */}
               <div className="bento-card col-span-5">
                 <div>
-                  <div className="bento-pill pill-professor">
-                    <Coins size={14} />
-                    <span>Cota Semestral</span>
-                  </div>
                   <h3 className="bento-title">Para Professores</h3>
                   <p className="bento-desc">
-                    Receba 1.000 moedas a cada início de semestre com saldo cumulativo e bonifique seus alunos.
+                    Receba 1.000 moedas a cada início de semestre com saldo cumulativo e bonifique seus alunos com justificativa formal de mérito.
                   </p>
                 </div>
 
                 <div className="bento-widget" style={{ background: '#fffbeb', borderColor: '#fde68a' }}>
-                  <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#92400e', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Coins size={28} />
+                  <div
+                    style={{
+                      fontSize: '2.1rem',
+                      fontWeight: 800,
+                      color: '#92400e',
+                      display: 'flex',
+                      alignItems: 'baseline',
+                      gap: '0.4rem',
+                    }}
+                  >
                     <span>1.000</span>
-                    <span style={{ fontSize: '0.85rem', color: '#78350f', fontWeight: 600 }}>moedas / semestre</span>
+                    <span style={{ fontSize: '0.85rem', color: '#78350f', fontWeight: 600 }}>moedas por semestre</span>
                   </div>
-                  <div style={{ fontSize: '0.775rem', color: '#78350f', background: 'rgba(254, 243, 199, 0.85)', padding: '0.55rem', borderRadius: '8px', border: '1px solid #fef08a' }}>
-                    ⚠️ Justificativa formal de reconhecimento obrigatória a cada transferência.
+                  <div
+                    style={{
+                      fontSize: '0.8rem',
+                      color: '#78350f',
+                      background: 'rgba(254, 243, 199, 0.85)',
+                      padding: '0.55rem',
+                      borderRadius: '8px',
+                      border: '1px solid #fef08a',
+                    }}
+                  >
+                    Justificativa de reconhecimento obrigatória a cada bonificação.
                   </div>
                 </div>
               </div>
 
-              {/* Item 3: Empresas Parceiras (col-span-5) */}
+              {/* Item 3: Empresas Parceiras */}
               <div className="bento-card col-span-5">
                 <div>
-                  <div className="bento-pill pill-empresa">
-                    <Building2 size={14} />
-                    <span>Rede de Benefícios</span>
-                  </div>
                   <h3 className="bento-title">Para Empresas Parceiras</h3>
                   <p className="bento-desc">
-                    Cadastre produtos e descontos no catálogo e receba o código de cupom para conferência presencial no balcão.
+                    Cadastre produtos e descontos no catálogo e realize a conferência presencial de cupons de resgate no balcão.
                   </p>
                 </div>
 
                 <div className="bento-widget">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)' }}>CUPOM PRESENCIAL</span>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#047857', background: '#ecfdf5', padding: '2px 8px', borderRadius: '8px', border: '1px solid #a7f3d0' }}>
-                      ✅ VÁLIDO
+                    <span
+                      style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        color: '#047857',
+                        background: '#ecfdf5',
+                        padding: '2px 8px',
+                        borderRadius: '8px',
+                        border: '1px solid #a7f3d0',
+                      }}
+                    >
+                      VÁLIDO
                     </span>
                   </div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '0.06em', color: 'var(--primary)' }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.06em', color: 'var(--primary)' }}>
                     CUPOM-6E6FACD8
                   </div>
                   <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>
-                    Item: 20% OFF em Livros • Aluno: Murilo Freitas
+                    20% OFF em Livros • Aluno: Murilo Freitas
                   </span>
                 </div>
               </div>
 
-              {/* Item 4: Segurança e Arquitetura MVC (col-span-7) */}
+              {/* Item 4: Validação e Notificações */}
               <div className="bento-card bento-card-dark col-span-7">
                 <div>
-                  <div className="bento-pill pill-dark">
-                    <ShieldCheck size={14} />
-                    <span>Arquitetura MVC & Segurança ACID</span>
-                  </div>
-                  <h3 className="bento-title" style={{ color: 'white' }}>Rastreabilidade e Integridade Financeira</h3>
+                  <h3 className="bento-title" style={{ color: 'white' }}>Validação e Notificações</h3>
                   <p className="bento-desc" style={{ color: '#cbd5e1' }}>
-                    Construído com base no padrão MVC estrito, banco relacional com transações atômicas e disparo simultâneo de cupons por e-mail para conferência bilateral.
+                    Controle seguro de saldos, histórico completo de movimentações e envio automático de cupons por e-mail para conferência presencial.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-3" style={{ gap: '0.75rem' }}>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.35rem', fontWeight: 800, color: '#38bdf8' }}>100%</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Transações ACID</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#38bdf8' }}>E-mail</span>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Disparo automático</span>
                   </div>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.35rem', fontWeight: 800, color: '#34d399' }}>Zero</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Gasto Duplo</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#34d399' }}>Código Único</span>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Validação presencial</span>
                   </div>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.35rem', fontWeight: 800, color: '#fbbf24' }}>E-mail</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Notificação Real</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fbbf24' }}>Extrato</span>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Histórico detalhado</span>
                   </div>
                 </div>
               </div>
 
-              {/* Item 5: Instituições Parceiras (col-span-12) */}
+              {/* Item 5: Instituições Parceiras */}
               <div className="col-span-12">
                 <div className="bento-strip">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'var(--primary-gradient)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(99, 102, 241, 0.35)' }}>
-                      <Award size={24} />
-                    </div>
-                    <div>
-                      <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)' }}>
-                        Integração com Instituições de Ensino Superior (PUC Minas)
-                      </h4>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                        Pré-cadastro corporativo de docentes, departamentos acadêmicos e validação dos cursos matriculados.
-                      </p>
-                    </div>
+                  <div>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.2rem' }}>
+                      Instituições de Ensino Superior
+                    </h4>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                      Cadastro corporativo de docentes, departamentos acadêmicos e validação dos cursos matriculados.
+                    </p>
                   </div>
 
-                  <button onClick={() => setAuthModalOpen(true)} className="btn btn-primary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.875rem' }}>
+                  <button
+                    onClick={() => setAuthModalOpen(true)}
+                    className="btn btn-primary"
+                    style={{ padding: '0.65rem 1.4rem', fontSize: '0.875rem' }}
+                  >
                     Acessar Demonstração
                   </button>
                 </div>
@@ -253,10 +328,22 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', padding: '1.85rem 1.75rem', marginTop: 'auto' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+      <footer style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', padding: '1.75rem', marginTop: 'auto' }}>
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            fontSize: '0.85rem',
+            color: 'var(--text-muted)',
+          }}
+        >
           <div>
-            <strong>Sistema de Moeda Estudantil</strong> • Laboratório de Desenvolvimento de Software / Projeto de Software (Lab 3)
+            <strong>Sistema de Moeda Estudantil</strong>
           </div>
           <div>
             Desenvolvido por <strong>Murilo Freitas</strong> e <strong>Letícia Figueiredo</strong> • <strong>PUC Minas</strong>

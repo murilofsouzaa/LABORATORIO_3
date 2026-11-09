@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import type { UsuarioAutenticado, Vantagem, Extrato, Transacao } from '../types/api';
-import { Coins, Gift, History, ShoppingBag, AlertCircle, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { CouponModal } from './CouponModal';
 
 interface AlunoDashboardProps {
@@ -71,14 +71,12 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
             className={`auth-tab ${tab === 'CATALOGO' ? 'active' : ''}`}
             onClick={() => setTab('CATALOGO')}
           >
-            <ShoppingBag size={18} style={{ display: 'inline', marginRight: '6px' }} />
             Catálogo de Vantagens
           </button>
           <button
             className={`auth-tab ${tab === 'EXTRATO' ? 'active' : ''}`}
             onClick={() => { setTab('EXTRATO'); carregarExtrato(); }}
           >
-            <History size={18} style={{ display: 'inline', marginRight: '6px' }} />
             Meu Extrato
           </button>
         </div>
@@ -95,9 +93,8 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
       <div className="stat-card" style={{ marginBottom: '2rem' }}>
         <div className="stat-title">Saldo Disponível para Resgate</div>
         <div className="stat-value">
-          <Coins size={40} />
           <span>{(usuario.saldo || 0).toLocaleString('pt-BR')}</span>
-          <span style={{ fontSize: '1.25rem', color: '#cbd5e1', fontWeight: 500 }}>moedas virtuais</span>
+          <span style={{ fontSize: '1.25rem', color: '#cbd5e1', fontWeight: 500 }}>moedas</span>
         </div>
         <div className="stat-subtext">
           Acumule moedas recebidas dos seus professores através de participação, desempenho e mérito acadêmico.
@@ -106,8 +103,7 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
 
       {tab === 'CATALOGO' && (
         <div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Gift size={22} color="var(--primary)" />
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
             Vantagens Disponíveis para Troca
           </h3>
 
@@ -124,8 +120,7 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
                     }}
                   />
                   <div className="vantagem-price-badge">
-                    <Coins size={16} />
-                    <span>{v.custo}</span>
+                    <span>{v.custo} moedas</span>
                   </div>
                 </div>
 
@@ -139,7 +134,6 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
                     className="btn btn-primary"
                     style={{ width: '100%', marginTop: 'auto' }}
                   >
-                    <ShoppingBag size={18} />
                     <span>{resgatandoId === v.id ? 'Processando...' : 'Resgatar Vantagem'}</span>
                   </button>
                 </div>
@@ -151,9 +145,8 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
 
       {tab === 'EXTRATO' && (
         <div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <History size={22} color="var(--primary)" />
-            Histórico Cronológico de Transações
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
+            Histórico de Transações
           </h3>
 
           <div className="table-container">
@@ -180,12 +173,12 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
                     <tr key={t.id}>
                       <td>
                         {t.tipo === 'ENVIO_MOEDAS' ? (
-                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', color: '#16a34a', fontWeight: 700 }}>
-                            <ArrowDownLeft size={16} /> Recebimento
+                          <span style={{ color: '#16a34a', fontWeight: 700 }}>
+                            + Recebimento
                           </span>
                         ) : (
-                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', color: '#dc2626', fontWeight: 700 }}>
-                            <ArrowUpRight size={16} /> Resgate
+                          <span style={{ color: '#dc2626', fontWeight: 700 }}>
+                            - Resgate
                           </span>
                         )}
                       </td>

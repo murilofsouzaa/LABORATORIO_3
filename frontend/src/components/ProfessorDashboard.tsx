@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import type { UsuarioAutenticado, Aluno, Extrato } from '../types/api';
-import { Coins, Send, History, AlertCircle, PlusCircle, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
 interface ProfessorDashboardProps {
   usuario: UsuarioAutenticado;
@@ -99,7 +99,6 @@ export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ usuario,
         </div>
 
         <button onClick={handleAdicionarCota} className="btn btn-gold" title="Simula o início de um novo semestre letivo">
-          <PlusCircle size={18} />
           <span>+1.000 Moedas (Novo Semestre)</span>
         </button>
       </div>
@@ -123,7 +122,6 @@ export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ usuario,
         <div className="stat-card">
           <div className="stat-title">Cota Semestral Disponível</div>
           <div className="stat-value">
-            <Coins size={40} />
             <span>{(usuario.saldo || 0).toLocaleString('pt-BR')}</span>
             <span style={{ fontSize: '1.25rem', color: '#cbd5e1', fontWeight: 500 }}>moedas</span>
           </div>
@@ -136,7 +134,6 @@ export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ usuario,
         <div className="card">
           <div className="card-header">
             <h3 className="card-title">
-              <Send size={20} color="var(--primary)" />
               Enviar Moedas para Aluno
             </h3>
           </div>
@@ -182,7 +179,6 @@ export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ usuario,
             </div>
 
             <button type="submit" disabled={enviando} className="btn btn-primary" style={{ width: '100%' }}>
-              <Send size={18} />
               <span>{enviando ? 'Processando envio...' : 'Confirmar e Enviar Moedas'}</span>
             </button>
           </form>
@@ -191,8 +187,7 @@ export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ usuario,
 
       {/* Histórico do Professor */}
       <div>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <History size={22} color="var(--primary)" />
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
           Histórico de Envios Realizados
         </h3>
 

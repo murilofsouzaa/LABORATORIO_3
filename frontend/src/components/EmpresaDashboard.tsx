@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import type { UsuarioAutenticado, Vantagem, Transacao } from '../types/api';
-import { PlusCircle, Search, Gift, CheckCircle2, AlertCircle, Coins } from 'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface EmpresaDashboardProps {
   usuario: UsuarioAutenticado;
@@ -99,7 +99,6 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
         <div className="card">
           <div className="card-header">
             <h3 className="card-title">
-              <PlusCircle size={20} color="var(--primary)" />
               Cadastrar Nova Vantagem
             </h3>
           </div>
@@ -141,7 +140,6 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
             </div>
 
             <button type="submit" disabled={cadastrando} className="btn btn-primary" style={{ width: '100%' }}>
-              <PlusCircle size={18} />
               <span>{cadastrando ? 'Salvando...' : 'Publicar Vantagem no Catálogo'}</span>
             </button>
           </form>
@@ -151,7 +149,6 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
         <div className="card">
           <div className="card-header">
             <h3 className="card-title">
-              <Search size={20} color="var(--primary)" />
               Conferência Presencial de Cupom
             </h3>
           </div>
@@ -174,7 +171,6 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
             </div>
 
             <button type="submit" disabled={validando} className="btn btn-secondary" style={{ width: '100%' }}>
-              <Search size={18} />
               <span>{validando ? 'Validando...' : 'Verificar Cupom'}</span>
             </button>
           </form>
@@ -212,8 +208,7 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
 
       {/* Catálogo das Vantagens Cadastradas pela Empresa */}
       <div>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Gift size={22} color="var(--primary)" />
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
           Vantagens Ofertadas por {usuario.nome}
         </h3>
 
@@ -228,8 +223,7 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
                 <div className="vantagem-img-container">
                   <img src={v.foto} alt={v.descricao} className="vantagem-img" />
                   <div className="vantagem-price-badge">
-                    <Coins size={16} />
-                    <span>{v.custo}</span>
+                    <span>{v.custo} moedas</span>
                   </div>
                 </div>
 
