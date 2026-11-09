@@ -11,6 +11,9 @@ Thumbs.db
 
 # Build and temporary files
 node_modules/
+**/node_modules/
+target/
+**/target/
 dist/
 build/
 bin/
