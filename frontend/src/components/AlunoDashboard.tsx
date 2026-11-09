@@ -89,15 +89,42 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ usuario, onUpdat
         </div>
       )}
 
-      {/* Saldo Hero Card */}
-      <div className="stat-card" style={{ marginBottom: '2rem' }}>
-        <div className="stat-title">Saldo Disponível para Resgate</div>
-        <div className="stat-value">
-          <span>{(usuario.saldo || 0).toLocaleString('pt-BR')}</span>
-          <span style={{ fontSize: '1.25rem', color: '#cbd5e1', fontWeight: 500 }}>moedas</span>
+      {/* Modern Light KPI Row */}
+      <div className="kpi-grid">
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">Saldo Disponível</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', background: '#ecfdf5', padding: '2px 8px', borderRadius: '12px' }}>
+              Carteira
+            </span>
+          </div>
+          <div className="kpi-value kpi-value-emerald">
+            <span>{(usuario.saldo || 0).toLocaleString('pt-BR')}</span>
+            <span className="kpi-unit">moedas</span>
+          </div>
+          <p className="kpi-subtext">Disponível para troca imediata por produtos e descontos.</p>
         </div>
-        <div className="stat-subtext">
-          Acumule moedas recebidas dos seus professores através de participação, desempenho e mérito acadêmico.
+
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">Catálogo Ativo</span>
+          </div>
+          <div className="kpi-value">
+            <span>{vantagens.length}</span>
+            <span className="kpi-unit">vantagens</span>
+          </div>
+          <p className="kpi-subtext">Opções cadastradas pelas empresas parceiras.</p>
+        </div>
+
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">Total de Resgates</span>
+          </div>
+          <div className="kpi-value">
+            <span>{extrato?.transacoes.filter((t) => t.tipo === 'RESGATE_VANTAGEM').length || 0}</span>
+            <span className="kpi-unit">cupons</span>
+          </div>
+          <p className="kpi-subtext">Benefícios trocados desde o ingresso na plataforma.</p>
         </div>
       </div>
 

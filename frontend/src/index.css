@@ -326,52 +326,149 @@ body {
   color: var(--text-main);
 }
 
-/* Stat Card (Hero Wallet) */
-.stat-card {
-  background: linear-gradient(135deg, #021a12 0%, #064e3b 60%, #047857 100%);
-  color: white;
-  border-radius: var(--radius-xl);
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 16px 36px -6px rgba(4, 31, 23, 0.4);
-  border: 1px solid rgba(52, 211, 153, 0.25);
+/* Metric & KPI Cards (Clean Modern SaaS Style) */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
-.stat-card::after {
-  content: '';
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(52, 211, 153, 0.2) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
+.kpi-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: #a7f3d0;
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.kpi-title {
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.kpi-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0.25rem 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.kpi-value-emerald {
+  color: var(--primary);
+}
+
+.kpi-unit {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.kpi-subtext {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: 0.25rem;
+}
+
+/* Backward compatibility for stat-card */
+.stat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  border-color: #a7f3d0;
+  box-shadow: var(--shadow-md);
 }
 
 .stat-title {
   font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #a7f3d0;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
 }
 
 .stat-value {
-  font-size: 2.85rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  margin: 0.5rem 0;
+  margin: 0.4rem 0;
+  color: var(--primary);
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: #fbbf24;
+  align-items: baseline;
+  gap: 0.5rem;
+  letter-spacing: -0.03em;
 }
 
 .stat-subtext {
   font-size: 0.875rem;
-  color: #cbd5e1;
+  color: var(--text-muted);
   max-width: 600px;
+}
+
+/* Quick Coin Selection Chips */
+.chip-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.chip-btn {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip-btn:hover {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+.chip-btn.active {
+  background: #059669;
+  border-color: #059669;
+  color: white;
 }
 
 /* Vantagem Card */
@@ -414,18 +511,17 @@ body {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: rgba(9, 13, 22, 0.88);
-  backdrop-filter: blur(8px);
-  color: #fbbf24;
-  padding: 0.35rem 0.8rem;
+  background: var(--primary);
+  color: white;
+  padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .vantagem-body {
@@ -731,15 +827,15 @@ body {
 }
 
 .bento-card-dark {
-  background: linear-gradient(135deg, #021a12 0%, #064e3b 50%, #047857 100%);
-  color: white;
-  border: 1px solid rgba(52, 211, 153, 0.25);
-  box-shadow: 0 16px 36px -6px rgba(4, 31, 23, 0.45);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  color: var(--text-main);
+  border: 1px solid #a7f3d0;
+  box-shadow: var(--shadow-sm);
 }
 
 .bento-card-dark:hover {
-  border-color: rgba(110, 231, 183, 0.45);
-  box-shadow: 0 20px 45px -6px rgba(5, 150, 105, 0.35);
+  border-color: #34d399;
+  box-shadow: var(--shadow-md);
 }
 
 .bento-pill {
@@ -759,7 +855,7 @@ body {
 .pill-aluno { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
 .pill-professor { background: var(--coin-bg); color: var(--coin-gold-dark); border: 1px solid var(--coin-border); }
 .pill-empresa { background: var(--accent-mint-bg); color: #047857; border: 1px solid var(--accent-mint-border); }
-.pill-dark { background: rgba(52, 211, 153, 0.15); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.3); }
+.pill-dark { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
 
 .bento-title {
   font-size: 1.35rem;
@@ -787,8 +883,9 @@ body {
 }
 
 .bento-widget-dark {
-  background: rgba(2, 26, 18, 0.65);
-  border: 1px solid rgba(52, 211, 153, 0.25);
+  background: #ffffff;
+  border: 1px solid #d1fae5;
+  box-shadow: 0 1px 2px rgba(6, 28, 20, 0.03);
 }
 
 .bento-strip {

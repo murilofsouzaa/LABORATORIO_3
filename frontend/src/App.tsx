@@ -279,24 +279,24 @@ function App() {
               {/* Item 4: Validação e Notificações */}
               <div className="bento-card bento-card-dark col-span-7">
                 <div>
-                  <h3 className="bento-title" style={{ color: 'white' }}>Validação e Notificações</h3>
-                  <p className="bento-desc" style={{ color: '#cbd5e1' }}>
+                  <h3 className="bento-title" style={{ color: 'var(--text-main)' }}>Validação e Notificações</h3>
+                  <p className="bento-desc" style={{ color: 'var(--text-muted)' }}>
                     Controle seguro de saldos, histórico completo de movimentações e envio automático de cupons por e-mail para conferência presencial.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-3" style={{ gap: '0.75rem' }}>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#6ee7b7' }}>E-mail</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Disparo automático</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--primary)' }}>E-mail</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Disparo automático</span>
                   </div>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#34d399' }}>Código Único</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Validação presencial</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#047857' }}>Código Único</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Validação presencial</span>
                   </div>
                   <div className="bento-widget bento-widget-dark" style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fbbf24' }}>Extrato</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Histórico detalhado</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#b45309' }}>Extrato</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Histórico detalhado</span>
                   </div>
                 </div>
               </div>

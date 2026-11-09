@@ -94,6 +94,33 @@ export const EmpresaDashboard: React.FC<EmpresaDashboardProps> = ({ usuario }) =
         </div>
       )}
 
+      {/* Modern Light KPI Row */}
+      <div className="kpi-grid">
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">Vantagens no Catálogo</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', background: '#ecfdf5', padding: '2px 8px', borderRadius: '12px' }}>
+              Ativo
+            </span>
+          </div>
+          <div className="kpi-value kpi-value-emerald">
+            <span>{vantagens.length}</span>
+            <span className="kpi-unit">itens</span>
+          </div>
+          <p className="kpi-subtext">Benefícios disponíveis para resgate pelos alunos.</p>
+        </div>
+
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">Status da Empresa</span>
+          </div>
+          <div className="kpi-value" style={{ fontSize: '1.75rem' }}>
+            <span>Credenciada</span>
+          </div>
+          <p className="kpi-subtext">Habilitada para conferência presencial de cupons.</p>
+        </div>
+      </div>
+
       <div className="grid grid-cols-2" style={{ marginBottom: '2.5rem' }}>
         {/* Formulário de Cadastro de Vantagens */}
         <div className="card">
